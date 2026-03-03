@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package orders.base.frontend.v1;
+
+import "google/protobuf/timestamp.proto";
+import "external/inventory/base/frontend/v1/inventory.proto";
+option go_package = "github.com/AskatNa/apis-gen-orders-service/base/frontend/v1;ordersbase";
+
+message Order {
+  string id = 1;
+  string user_id = 2;
+  repeated OrderItem items = 3;
+  float total_amount = 4;
+  OrderStatus status = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message OrderItem {
+  string product_id = 1;
+  int32 quantity = 2;
+  float unit_price = 3;
+  inventory.base.frontend.v1.Product product_details = 4;
+}
+
+enum OrderStatus {
+  ORDER_STATUS_UNSPECIFIED = 0;
+  ORDER_STATUS_CREATED = 1;
+  ORDER_STATUS_PROCESSING = 2;
+  ORDER_STATUS_SHIPPED = 3;
+  ORDER_STATUS_DELIVERED = 4;
+  ORDER_STATUS_CANCELLED = 5;
+}
